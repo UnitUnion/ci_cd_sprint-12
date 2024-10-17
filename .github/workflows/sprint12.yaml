@@ -1,0 +1,23 @@
+name: sprint-12
+on:
+  push:
+    branches: [ "test" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: golang:1.23
+    steps:
+      - name: Code check
+        uses: actions/checkout@v4
+      - name: Run test
+        run: |
+          go mod tidy
+          go test -test.v ./...
+#  build:
+#    runs-on: ubuntu-latest
+#    container: golang:1.23
+#    steps:
+#      - name: Build container
