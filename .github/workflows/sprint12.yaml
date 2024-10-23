@@ -32,10 +32,15 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5.5.1
+        with:
+          images: unitunion/practicum
       - name: Build and push Docker Image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: latest
-          labels: v1
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
